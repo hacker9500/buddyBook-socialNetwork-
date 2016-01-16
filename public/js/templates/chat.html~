@@ -1,0 +1,18 @@
+<div class="" ng-controller="chat">
+  <div class="row col-lg-12 col-md-12" style="height: 550px;box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.3); border-radius: 3px;position : inherit">
+    <div class="col-lg-4 col-md-4" style="border-right: 1px solid black; height: 100%; overflow:auto;">
+      <friend-list ng-repeat="friend in friends" friend-object="friend" ng-click="loadFriend(friend)"></friend-list>
+    </div>
+    <div class="col-lg-8 col-md-8" style="height:100%; position:inherit;">
+      <div class="msgs col-lg-12 col-md-12" style="height: 500px;overflow: auto;">
+        <message ng-repeat="message in messages" message-object="message"></message>
+      </div>
+      <div class="col-lg-12 col-md-12" style="height:50px;padding-top: 15px; border-top: 1px solid grey;">
+        <form ng-submit="postMessage(message)">
+        <input type="text" name="name" value="" ng-model="message" style="width:150px; display:inline-block; float:left" placeholder="enter message">
+        <button type="submit" name="button" ng- style="float:right; display: inline-block">Post</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

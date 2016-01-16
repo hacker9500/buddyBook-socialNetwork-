@@ -1,0 +1,9 @@
+// test model
+
+var models = require("model.js");
+
+models();
+
+var chatModel = new models.chat();
+
+conxole.log(chatModel);

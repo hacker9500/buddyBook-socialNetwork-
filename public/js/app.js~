@@ -1,0 +1,45 @@
+console.log("ok");
+
+var app = angular.module('dashBoard',['ngRoute']);
+
+app.config(function($routeProvider){
+  $routeProvider
+  .when('/',{
+    templateUrl: "/js/templates/home.html",
+    controller: "homeController"
+  })
+  .when('/wall',{
+    templateUrl: "/js/templates/wall.html",
+    controller: "wallController"
+  })
+  .when('/chat',{
+    templateUrl: "/js/templates/chat.html",
+    controller: "chat"
+  })
+  .otherwise({
+    redirectTo: "/"
+  });
+});
+
+app.controller("navigator",['$scope','$location','$http',function($scope,$location,$http){
+  $scope.home = function(){
+    $location.path("/home");
+  };
+  $scope.wall = function(){
+    $location.path("/wall")
+    console.log("wall");
+  };
+  $scope.chat = function(){
+    $location.path("/chat");
+  };
+  $scope.logout = function(){
+    console.log("log out");
+    $http.post("/logout")
+    .success(function(result){
+      window.location.href = "http://192.168.56.145:3000"
+    })
+    .error(function(data,status){
+      console.log(status);
+    })
+  };
+}]);

@@ -1,0 +1,89 @@
+var express = require('express');
+var app = express();
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var ejs = require("ejs");
+var path = require("path");
+var session = require("express-session");
+
+
+// middleware of libs
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({
+  name: "logStatus",
+  secure: false,
+  secret: "hello baby",
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(express.static(path.join(__dirname + "/public")));
+app.set("view engine",ejs);
+app.engine('html',ejs.renderFile);
+app.set("views", path.join(__dirname + "/views"));
+
+//defining my middle-ware
+var log = function (req,resp,next){
+  console.log("in the logger user is"+typeof(req.session.user));
+  next();
+}
+var auth = function (req,resp,next){
+  console.log("auth ware");
+  next();
+}
+
+var middleware = {
+  logger : log,
+  auth: auth,
+};
+app.use(middleware.logger);
+
+
+//routing
+
+app.get("/",function(req,resp){
+  resp.redirect("/login");
+});
+
+app.get("/home",function(req,resp){
+  resp.render("home.html");
+});
+
+app.get("/login", function(req,resp){
+  var sess = req.session;
+  if(typeof(sess.user) == "undefined" )
+    resp.render("login.html");
+  else{
+    console.log(sess.user.userName+" "+sess.user.password);
+    resp.redirect("/home");
+  }
+});
+app.post("/login",function(req,resp){
+  console.log(req.body.user);
+  console.log(req.body.password);
+  var sess = req.session;
+  sess.user = {
+    userName: req.body.user,
+    password: req.body.password
+  };
+  console.log(req.user);
+  resp.redirect("/");
+});
+app.post("/logout",function(req,resp){
+  delete req.session.user;
+  resp.send("ok");
+});
+
+//end routing
+
+//chat
+//end chat//
+
+//listen
+var PORT = 80;
+app.listen(PORT, function(){
+  console.log("server started");
+});

@@ -1,0 +1,100 @@
+var mongoose = require('mongoose');
+
+mongoose.connect("mongodb://localhost/schemaTest");
+
+var db = mongoose.connection;
+db.on('error',console.error.bind(console, "connection error"));
+db.once('open',function(){
+    console.log("connected");
+});
+
+// chat model
+var chatSchema = mongoose.Schema({
+    chatID : mongoose.Schema.Types.ObjectId,
+    chat : [{
+	who: String,
+	text: String
+    }]
+});
+
+chatSchema.methods.getChat = function(){
+    return this.chat;
+};
+
+chatSchema.methods.addMessage = function(message){
+    this.chat.push(message);
+    return true;
+};
+
+
+var chat = mongoose.model('chat',chatSchema);
+
+var c = new chat();
+
+
+
+
+
+
+
+
+//person model
+var personSchema = mongoose.Schema({
+    name: String,
+    email: String,
+    password: String,
+    feeds: [{
+	text: String,
+	like: Number,
+	time: String
+    }],
+    friends :[{
+	friendId : mongoose.Schema.Types.ObjectId,
+	name: String,
+	chatId : mongoose.Schema.Types.ObjectId
+    }]
+});
+
+personSchema.methods.getWall = function (){
+    return this.feeds;
+};
+
+personSchema.methods.postFeed = function(feed){
+    this.feeds.splice(0,0,feed);
+    return true;
+};
+
+personSchema.methods.friendList = function(){
+    var dic = [];
+    this.friends.forEach(friend => {
+	dic.push(friend);
+    });
+    return dic;
+};
+
+personSchema.methods.getFeed = function (){
+    //implementing feeds
+    
+};
+
+
+
+// all the people on the network
+var peopleList = mongoose.Schema({
+    name: String,
+    id: mongoose.Schema.Types.ObjectId
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

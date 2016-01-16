@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html ng-app="dashBoard">
+  <head>
+    <title>Test Page</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/css/home.css" media="screen" title="no title" charset="utf-8">
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="/js/angular.min.js" charset="utf-8"></script>
+    <script src="/js/angular-route.min.js" charset="utf-8"></script>
+    <script src="/js/app.js" charset="utf-8"></script>
+    <script src="/js/home.js" charset="utf-8"></script>
+    <script src="/js/wall.js" charset="utf-8"></script>
+    <script src="/js/chat.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <!-- this is the position of nav -->
+    <div class="nav col-lg-12 col-md-12" ng-controller="navigator">
+      <i class="logo"><strong>BuddyBook</strong></i>
+      <input type="search" style="margin-top:8px;margin-left:100px;height:30px;width:400px;font-size:15px;display:inline-block; color: black" placeholder="Search Friends" ng-model="search">
+        <ul class="tabs">
+          <li class="tab" ng-click="home()">Home</li>
+          <li class="tab" ng-click="wall()">Wall</li>
+          <li class="tab" ng-click="chat()">Chat</li>
+          <li class="tab" ng-click="logout()">Log-out</li>
+        </ul>
+    </div>
+
+    <!-- view -->
+    <div class="content col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3" ng-view></div>
+    <!-- chat -->
+
+    <!--<form action="/logout" method="post">
+      <button type="submit">Log out!!</button>
+    </form>-->
+  </body>
+</html>

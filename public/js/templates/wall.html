@@ -1,0 +1,8 @@
+<div ng-controller="wallController">
+  <div ng-if="present == false" class="col-lg-12 col-md-12" id="postFeed">
+    <textarea rows="8" cols="50" ng-model="postFeed"></textarea>
+    <br>
+    <button type="button" name="button" ng-click="postTheFeed(postFeed)">Post!!</button>
+  </div>
+  <content-feed ng-repeat="myfeed in myfeeds" like-it="likeIt(myfeed)" feed-object="myfeed"></content-feed>
+</div>
